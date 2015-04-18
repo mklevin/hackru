@@ -78,12 +78,12 @@ app.use(passport.session());
 // =============================================================================
 // DATABASE
 // =============================================================================
-var dbConfig = require("./config/db");
-mongoose.connect(dbConfig.url);
+// var dbConfig = require("./config/db");
+// mongoose.connect(dbConfig.url);
 
 // =============================================================================
 // ROUTES
-// ===
+// =============================================================================
 // var api = require("./routes/api");
 // var auth = require("./routes/auth");
 // var routes = require("./routes/routes");
@@ -91,6 +91,10 @@ mongoose.connect(dbConfig.url);
 // app.use("/api", api);
 // app.use("/auth", auth);
 // app.use("/", routes);
+
+app.get("/", function(req, res) {
+  res.send("Hello world!");
+});
 
 // The last middle wear to use is the 404 middlewear. If they didn't get
 // anywhere show them the 404
