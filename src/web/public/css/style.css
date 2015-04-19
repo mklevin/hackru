@@ -1,0 +1,41 @@
+.navbar-text {
+  margin-right: 20px;
+}
+
+.page-header {
+  margin-top: -10px;
+}
+
+
+.ng-hide {
+  position: absolute;
+  -webkit-transition: 1s linear all; /* Chrome */
+  transition: 1s linear all;
+  opacity: 0;
+}
+
+.ng-hide-remove {
+  postion: absolute;
+  webkit-transition: all linear 0.5s;
+  transition: all linear 0.5s;
+  opacity: 1;
+}
+
+.animate-show {
+  line-height: 20px;
+  opacity: 1;
+  padding: 10px;
+  background: white;
+}
+
+.animate-show.ng-hide-add.ng-hide-add-active,
+.animate-show.ng-hide-remove.ng-hide-remove-active {
+  -webkit-transition: all linear 0.5s;
+  transition: all linear 0.5s;
+}
+
+.animate-show.ng-hide {
+  line-height: 0;
+  opacity: 0;
+  padding: 0 10px;
+}

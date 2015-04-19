@@ -48,6 +48,7 @@ passport.use(new GoogleStrategy({
     callbackURL: authConfig.callbackURL
   },
   function(accessToken, refreshToken, profile, done) {
+    console.log("Callback thing");
     console.log(profile);
     console.log(profile.id);
     done(null, profile);
@@ -55,22 +56,20 @@ passport.use(new GoogleStrategy({
 ));
 
 // configure Express and express middlewear
-// app.use(express.static(__dirname + '/client'));
-// app.set('views', __dirname + '/client/html');
+app.use(express.static(__dirname + '/public'));
+app.set('views', __dirname + '/public/html');
 app.use(morgan("combined"));
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(methodOverride());
 
-// configure EJS
-app.set('views', __dirname + '/views');
-app.set('view engine', 'ejs');
+
 app.use(express.static(path.join(__dirname, 'public')));
-// app.use(session({
-//   secret: authConfig.sessionSecret,
-//   resave: false,
-//   saveUninitialized: true
-// }));
+app.use(session({
+  secret: authConfig.clientSecret,
+  resave: false,
+  saveUninitialized: true
+}));
 
 // Initialize Passport!  Also use passport.session() middleware, to support
 // persistent login sessions
@@ -103,48 +102,46 @@ app.get("/auth/google",
 app.get("/auth/google/callback",
         passport.authenticate("google", { failureRedirect: "/fff" }),
         function(req, res) {
-          res.redirect("/success");
+          res.redirect("/");
         });
+
+app.get("/auth/logout", function(req, res) {
+  req.logout();
+  res.redirect("/");
+});
 
 app.use("/api", api);
 
-var user = {};
-var listings = [];
-listings[0] = {};
-listings[1] = {};
-user.first = "Natalie";
-user.last = "Lane";
+// var user = {};
+// var listings = [];
+// listings[0] = {};
+// listings[1] = {};
+// user.first = "Natalie";
+// user.last = "Lane";
 
-listings[0].id = "0";
-listings[0].title = "HackRU Winner";
-listings[0].location = { "city": "Rutgersville", "state": "NJ", "country": "US"};
-listings[0].description = "This is the best job ever.";
-listings[0].perks = ["free coffee", "admiration"];
-listings[0].skills = ["being the best", "Java"];
+// listings[0].id = "0";
+// listings[0].title = "HackRU Winner";
+// listings[0].location = { "city": "Rutgersville", "state": "NJ", "country": "US"};
+// listings[0].description = "This is the best job ever.";
+// listings[0].perks = ["free coffee", "admiration"];
+// listings[0].skills = ["being the best", "Java"];
 
-listings[1].id = "1";
-listings[1].title = "HackRU Dinner";
-listings[1].location = { "city": "Noodles", "state": "NJ", "country": "US"};
-listings[1].description = "This is the weirdest 1 AM dinner ever.";
-listings[1].perks = ["chicken", "other meat"];
-listings[1].skills = ["meat identification", "balls"];
+// listings[1].id = "1";
+// listings[1].title = "HackRU Dinner";
+// listings[1].location = { "city": "Noodles", "state": "NJ", "country": "US"};
+// listings[1].description = "This is the weirdest 1 AM dinner ever.";
+// listings[1].perks = ["chicken", "other meat"];
+// listings[1].skills = ["meat identification", "balls"];
+
+var Searcher = require("./models/Searcher");
+var Employer = require("./models/Employer");
 
 app.get("/", function(req, res) {
-  client.get("http://localhost:3100/api/listings", function(data, response) {
-    console.log(data);
-    //console.log(response);
-  });
-  res.render("index", {user: user, listing: listings[0]});
+  res.sendFile(path.resolve("./public/html/index.html"));
 });
 
-app.post("/next", function(req, res) {
-	console.log("Hey!");
-	res.render("partials/job_card", {user: user, listing: listings[1]});
-});
-
-app.post("/more", function(req, res) {
-	listings[req.body.listing].company = "RutgersCorp";
-	res.render("partials/full_job_card", {user: user, listing: listings[req.body.listing]});
+app.get("/signup", function(req, res) {
+  res.sendFile(path.resolve("./public/html/signup.html"));
 });
 
 // The last middle wear to use is the 404 middlewear. If they didn't get
