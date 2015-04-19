@@ -114,14 +114,14 @@ http.get("http://172.31.244.174:3100/api/listings", function(res) {
 user.first = "Natalie";
 user.last = "Lane";
 
-listings[0].id = "1";
+listings[0].id = "0";
 listings[0].title = "HackRU Winner";
 listings[0].location = { "city": "Rutgersville", "state": "NJ", "country": "US"};
 listings[0].description = "This is the best job ever.";
 listings[0].perks = ["free coffee", "admiration"];
 listings[0].skills = ["being the best", "Java"];
 
-listings[1].id = "2";
+listings[1].id = "1";
 listings[1].title = "HackRU Dinner";
 listings[1].location = { "city": "Noodles", "state": "NJ", "country": "US"};
 listings[1].description = "This is the weirdest 1 AM dinner ever.";
@@ -138,7 +138,8 @@ app.post("/next", function(req, res) {
 });
 
 app.post("/more", function(req, res) {
-	res.render("partials/full_job_card", {user: user, listing: listings[1]});
+	listings[req.body.listing].company = "RutgersCorp";
+	res.render("partials/full_job_card", {user: user, listing: listings[req.body.listing]});
 });
 
 // The last middle wear to use is the 404 middlewear. If they didn't get
