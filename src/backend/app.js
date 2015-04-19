@@ -21,13 +21,14 @@ var express        = require("express");
     cookieParser   = require("cookie-parser");
     methodOverride = require("method-override");
     mongoose       = require("mongoose");
+    GoogleStrategy = require("passport-google-oauth").OAuth2Strategy;
 
 // =============================================================================
 // CONFIGURATIONS
 // =============================================================================
 
 // Configure passport, grab credentials
-//var authConfig = require("./config/auth");
+var authConfig = require("./config/auth");
 
 // Allo passport to serialize and deserialize users
 passport.serializeUser(function(user, done) {
@@ -38,24 +39,17 @@ passport.deserializeUser(function(obj, done) {
   done(null, obj);
 });
 
-// // Input whichever strategy you would like to use
-// passport.use(new GitHubStrategy({
-//     clientID: authConfig.clientID,
-//     clientSecret: authConfig.clientSecret,
-//     callbackURL: authConfig.callbackURL
-//   },
-//   function(accessToken, refreshToken, profile, done) {
-//     // asynchronous verification, for effect...
-//     process.nextTick(function () {
-
-//       // To keep the example simple, the user's GitHub profile is returned to
-//       // represent the logged-in user.  In a typical application, you would want
-//       // to associate the GitHub account with a user record in your database,
-//       // and return that user instead.
-//       return done(null, profile);
-//     });
-//   }
-// ));
+passport.use(new GoogleStrategy({
+    clientID: authConfig.clientID,
+    clientSecret: authConfig.clientSecret,
+    callbackURL: authConfig.callbackURL
+  },
+  function(accessToken, refreshToken, profile, done) {
+    console.log(profile);
+    console.log(profile.id);
+    done(null, profile);
+  }
+));
 
 // configure Express and express middlewear
 // app.use(express.static(__dirname + '/client'));
@@ -64,11 +58,11 @@ app.use(morgan("combined"));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false}));
 app.use(methodOverride());
-// app.use(session({
-//   secret: authConfig.sessionSecret,
-//   resave: false,
-//   saveUninitialized: true
-// }));
+app.use(session({
+  secret: authConfig.clientSecret,
+  resave: false,
+  saveUninitialized: true
+}));
 
 // Initialize Passport!  Also use passport.session() middleware, to support
 // persistent login sessions
@@ -86,10 +80,24 @@ mongoose.connect(dbConfig.url);
 // =============================================================================
 var api = require("./routes/api");
 
+app.get("/auth/google",
+        passport.authenticate("google", authConfig.scope),
+        function(req, res) {});
+
+app.get("/auth/google/callback",
+        passport.authenticate("google", { failureRedirect: "/fff" }),
+        function(req, res) {
+          res.redirect("/success");
+        });
+
 app.use("/api", api);
 
 app.get("/", function(req, res) {
   res.send("Hello world!");
+});
+
+app.get("/success", function(req, res) {
+  res.send("You logged in " + req.user.displayName);
 });
 
 // The last middle wear to use is the 404 middlewear. If they didn't get
