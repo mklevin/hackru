@@ -59,7 +59,7 @@ router.get("/companies/id/:id", loggedIn, function(req, res, next) {
 
 // ___________________listings___________________
 // return all listings
-router.get("/listings", loggedIn, function(req, res, next) {
+router.get("/listings", function(req, res, next) {
   Listing.find( function(err, listings) {
     if (err) next(err);
     res.json(listings);
@@ -127,7 +127,7 @@ router.post("/companies/new", loggedIn, function(req, res, next) {
 
 // ___________________listings___________________
 // Create a new listing
-router.post("/listings/new", loggedIn, function(req, res, next) {
+router.post("/listings/new", function(req, res, next) {
   Listing.create(req.body, function(err, listing) {
     if (err) next(err);
     res.json(listing);
