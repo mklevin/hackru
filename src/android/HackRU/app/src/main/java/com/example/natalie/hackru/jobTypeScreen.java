@@ -12,21 +12,37 @@ import android.widget.Button;
 /**
  * Created by Natalie on 4/19/2015.
  */
-public class nameScreen extends ActionBarActivity {
+public class jobTypeScreen extends ActionBarActivity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.name_screen);
+        setContentView(R.layout.jobtype_screen);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        final Button button = (Button) findViewById(R.id.Button2);
-        button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent newIntent = new Intent(getApplicationContext(), userTypeScreen.class);
+        final Button Fullbutton = (Button) findViewById(R.id.button5);
+            Fullbutton.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                 Intent newIntent = new Intent(getApplicationContext(), fieldScreen.class);
+                 startActivity(newIntent);
+            }
+        });
+
+        final Button Partbutton = (Button) findViewById(R.id.button6);
+            Partbutton.setOnClickListener(new View.OnClickListener() {
+              public void onClick(View v) {
+                Intent newIntent = new Intent(getApplicationContext(), fieldScreen.class);
                 startActivity(newIntent);
+            }
+        });
+
+        final Button Intbutton = (Button) findViewById(R.id.button7);
+            Intbutton.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                  Intent newIntent = new Intent(getApplicationContext(), fieldScreen.class);
+                  startActivity(newIntent);
             }
         });
     }

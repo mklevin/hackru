@@ -24,7 +24,6 @@ public class hackruActivity extends ActionBarActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         getSupportActionBar().setHomeButtonEnabled(true);
 
         final Button button = (Button) findViewById(R.id.button);
