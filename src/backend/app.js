@@ -56,7 +56,7 @@ passport.use(new GoogleStrategy({
 // app.set('views', __dirname + '/client/html');
 app.use(morgan("combined"));
 app.use(cookieParser());
-app.use(bodyParser.urlencoded({ extended: true}));
+app.use(bodyParser.json(  ));
 app.use(methodOverride());
 app.use(session({
   secret: authConfig.clientSecret,

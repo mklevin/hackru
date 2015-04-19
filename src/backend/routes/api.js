@@ -59,7 +59,7 @@ router.get("/companies/id/:id", loggedIn, function(req, res, next) {
 
 // ___________________listings___________________
 // return all listings
-router.get("/listings", function(req, res, next) {
+router.get("/listings", loggedIn, function(req, res, next) {
   Listing.find( function(err, listings) {
     if (err) next(err);
     res.json(listings);
@@ -67,7 +67,7 @@ router.get("/listings", function(req, res, next) {
 });
 
 // return a specific listing based on its mongodb id
-router.get("/listings/id/:id", function(req, res, next) {
+router.get("/listings/id/:id", loggedIn, function(req, res, next) {
   Listing.findById(req.params.id, function(err, listing) {
     if (err) next(err);
     res.json(listing);
@@ -127,7 +127,7 @@ router.post("/companies/new", loggedIn, function(req, res, next) {
 
 // ___________________listings___________________
 // Create a new listing
-router.post("/listings/new", function(req, res, next) {
+router.post("/listings/new", loggedIn, function(req, res, next) {
   Listing.create(req.body, function(err, listing) {
     if (err) next(err);
     res.json(listing);
@@ -136,7 +136,17 @@ router.post("/listings/new", function(req, res, next) {
 
 
 router.post("/listings", loggedIn, function(req, res, next) {
-  Listing.find({}, function(err, listings) {
+  //console.log(req.body);
+  query = Listing.find({
+    type: req.body.type,
+    field: req.body.field,
+  });
+  query.where("reqskills").in(req.body.skills);
+  query.where("yearsexp").lt(req.body.yearsexp + 1);
+  // quere.where("")
+  // query.where("locradius").lt(req.body.locradius);
+  query.limit(10);
+  query.exec(function(err, listings) {
     if (err) next(err);
     res.json(listings);
   });
@@ -180,7 +190,8 @@ function loggedIn(req, res, next) {
     next();
   } else {
     console.log("not logged in");
-    res.redirect("/");
+    //res.redirect("/");
+    next();
   }
 }
 

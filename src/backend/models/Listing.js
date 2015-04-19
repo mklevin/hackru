@@ -12,9 +12,10 @@ var listingSchema = new Schema({
   time: { type: Date, default: Date.now },
   reqskills: [String],
   reqedu: [String],
-  reqexp: [String],
+  yearsexp: Number,
   perks: [String],
   description: String,
+  field: String,
   company: { type: Schema.Types.ObjectId, ref: "Company" },
   acceptedSearchers: [{type: Schema.Types.ObjectId, ref: "Searcher"}],
   deniedSearcher: [{type: Schema.Types.ObjectId, ref: "Searcher"}]
