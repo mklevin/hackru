@@ -79,12 +79,31 @@ router.get("/companies/id/:id", function(req, res, next) {
 // return all listings
 router.get("/listings", function(req, res, next) {
   params = {
-    number: req.query.number,
+    number: 10,
+    type: "internship",
+    skills: [],
+    location: [],
+    time: "Summer2015",
+    edu: [],
+    exp: []
+  };
+
+  if (req.query.number) params.number = req.query.number;
+  if (req.query.skills) params.skills = req.query.skills.split(",");
+  if (req.query.type) params.type = req.query.type;
+  if (req.query.location) params.location = req.query.location.split(",");
+  if (req.query.time) params.time = req.query.time;
+  if (req.query.edu) params.edu = req.query.edu;
+  if (req.query.exp) params.exp = req.query.exp;
+
+  var fields = {
+    type: params.type,
+    count: params.number,
+    skip: Math.floor((Math.random() * 100) + 1)
   };
 
   console.log(params);
-  console.log(req.query);
-  Listing.find(function(err, listings) {
+  Listing.find(fields, function(err, listings) {
     if (err) next(err);
     res.json(listings);
   });

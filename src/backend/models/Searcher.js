@@ -33,7 +33,10 @@ var searcherSchema = new Schema({
       areacode: Number,
       number: Number
     },
-    website: String
+    website: String,
+    acceptedListings: [{type: Schema.Types.ObjectId, ref: "Listing"}],
+    deniedListings: [{type: Schema.Types.ObjectId, ref: "Listing"}],
+    savedListings: [{type: Schema.Types.ObjectId, ref: "Listing"}]
   }
 });
 

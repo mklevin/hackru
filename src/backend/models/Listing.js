@@ -14,7 +14,9 @@ var listingSchema = new Schema({
   reqexp: [String],
   perks: [String],
   description: { type: String, required: true },
-  company: { type: Schema.Types.ObjectId, ref: "Company" }
+  company: { type: Schema.Types.ObjectId, ref: "Company" },
+  acceptedSearchers: [{type: Schema.Types.ObjectId, ref: "Searcher"}],
+  deniedSearcher: [{type: Schema.Types.ObjectId, ref: "Searcher"}]
 });
 
 module.exports = mongoose.model("Listing", listingSchema);
