@@ -12,24 +12,19 @@ import android.widget.Button;
 /**
  * Created by Natalie on 4/19/2015.
  */
-public class newJobScreen extends ActionBarActivity {
-
+public class contactScreen extends ActionBarActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.newjob_screen);
+        setContentView(R.layout.contact_screen);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
-
-        final Button b1 = (Button) findViewById(R.id.button12);
-            b1.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent newIntent = new Intent(getApplicationContext(), employMatchScreen.class);
-                startActivity(newIntent);
-            }
-        });
     }
+
+
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -51,4 +46,6 @@ public class newJobScreen extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 }
+

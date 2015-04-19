@@ -12,6 +12,30 @@
             android:label="Mploy(me)">
         </activity>
         <activity
+            android:name=".successScreen"
+            android:label="Mploy(me)">
+        </activity>
+        <activity
+            android:name=".seekerApplyScreen"
+            android:label="Mploy(me)">
+        </activity>
+        <activity
+            android:name=".contactScreen"
+            android:label="Mploy(me)">
+        </activity>
+        <activity
+            android:name=".viewResumeScreen"
+            android:label="Mploy(me)">
+        </activity>
+        <activity
+            android:name=".seekerMatchScreen"
+            android:label="Mploy(me)">
+        </activity>
+        <activity
+            android:name=".employMatchScreen"
+            android:label="Mploy(me)">
+        </activity>
+        <activity
             android:name=".newJobScreen"
             android:label="Mploy(me)">
         </activity>

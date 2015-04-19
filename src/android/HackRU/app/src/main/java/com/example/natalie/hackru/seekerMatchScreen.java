@@ -6,30 +6,46 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 /**
  * Created by Natalie on 4/19/2015.
  */
-public class newJobScreen extends ActionBarActivity {
+public class seekerMatchScreen extends ActionBarActivity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.newjob_screen);
+        setContentView(R.layout.seekermatch_screen);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        final Button b1 = (Button) findViewById(R.id.button12);
-            b1.setOnClickListener(new View.OnClickListener() {
+        final Button match = (Button) findViewById(R.id.button14);
+        match.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent newIntent = new Intent(getApplicationContext(), employMatchScreen.class);
+                Intent newIntent = new Intent(getApplicationContext(), seekerApplyScreen.class);
+                startActivity(newIntent);
+            }
+        });
+
+        final Button noMatch = (Button) findViewById(R.id.button15);
+        noMatch.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent newIntent = new Intent(getApplicationContext(), seekerMatchScreen.class);
+                // view next job listing
                 startActivity(newIntent);
             }
         });
     }
+
+
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

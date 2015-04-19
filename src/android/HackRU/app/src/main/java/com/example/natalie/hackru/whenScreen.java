@@ -26,7 +26,7 @@ public class whenScreen extends ActionBarActivity {
         final Button button = (Button) findViewById(R.id.button13);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent newIntent = new Intent(getApplicationContext(), whenScreen.class);
+                Intent newIntent = new Intent(getApplicationContext(), seekerMatchScreen.class);
                 startActivity(newIntent);
             }
         });
