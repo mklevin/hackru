@@ -1,42 +1,36 @@
 package com.example.natalie.hackru;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
 import android.widget.Button;
 
-import java.net.URL;
+/**
+ * Created by Natalie on 4/19/2015.
+ */
+public class nameScreen extends ActionBarActivity {
 
-
-public class hackruActivity extends ActionBarActivity {
-    private String login="172.31.244.174:3100";
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_hackru);
+        setContentView(R.layout.name_screen);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        getSupportActionBar().setHomeButtonEnabled(true);
-
-        final Button button = (Button) findViewById(R.id.button);
-        button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent newIntent = new Intent(getApplicationContext(), nameScreen.class);
-                startActivity(newIntent);
-            }
-        });
+        Button next = (Button) findViewById(R.id.Button04);
+//        next.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View view) {
+//                Intent intent = new Intent();
+//                setResult(RESULT_OK, intent);
+//                finish();
+//            }
+//
+//        });
     }
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
