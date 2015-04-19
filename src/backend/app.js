@@ -78,19 +78,15 @@ app.use(passport.session());
 // =============================================================================
 // DATABASE
 // =============================================================================
-// var dbConfig = require("./config/db");
-// mongoose.connect(dbConfig.url);
+var dbConfig = require("./config/db");
+mongoose.connect(dbConfig.url);
 
 // =============================================================================
 // ROUTES
 // =============================================================================
-// var api = require("./routes/api");
-// var auth = require("./routes/auth");
-// var routes = require("./routes/routes");
+var api = require("./routes/api");
 
-// app.use("/api", api);
-// app.use("/auth", auth);
-// app.use("/", routes);
+app.use("/api", api);
 
 app.get("/", function(req, res) {
   res.send("Hello world!");
