@@ -1,0 +1,49 @@
+<!doctype html>
+<html ng-app="mploy">
+  <head>
+    <title>Tinder Thing</title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+    <script type="text/javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.15/angular-animate.min.js"></script>
+<!--     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.15/angular-route.js"></script> -->
+    <script type="text/javascript" src="js/ang-app.js"></script>
+    <link rel="stylesheet" type="text/css" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+  </head>
+  <body>
+    <div ng-include src="'html/partials/nav.html'"></div>
+    <div class="container" ng-controller="SignupController">
+      <form>
+        <div id="name-input" class="animate-show" ng-show="position == 'start'">
+          <div class="form-group">
+            <label for="firstnameInput">First Name:</label>
+            <input type="text" class="form-control" id="firstnameInput" placeholder="Joe">
+          </div>
+          <div class="form-group">
+            <label for="middlenameInput">Middle Name: (opitonal)</label>
+            <input type="text" class="form-control" id="middlenameInput" placeholder="J">
+          </div>
+          <div class="form-group">
+            <label for="lastnameInput">Last Name:</label>
+            <input type="text" class="form-control" id="lastnameInput" placeholder="Schmoe">
+          </div>
+          <button type="button" class="btn btn-primary" ng-click="updatePosition('typeInput')">Continue</button>
+        </div>
+
+        <div id="typeInput" class="form-group animate-show" ng-show="position == 'typeInput'">
+          <button type="button" class="btn btn-primary btn-lg center-block">Employer</button>
+          <br>
+          <button type="button" class="btn btn-primary btn-lg center-block" ng-click="updatePosition('fieldInput')">Job Seekers</button>
+        </div>
+
+        <div id="fieldInputDiv" ng-show="position == 'fieldInput'">
+          <label for="fieldInput">Field:</label>
+          <input type="text" class="form-control" id="fieldInput" placeholder="computer science">
+          <br>
+          <button type="button" class="btn btn-primary">Continue</button>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>

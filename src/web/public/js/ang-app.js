@@ -1,21 +1,27 @@
-var app = angular.module("mploy", []);
+var app = angular.module("mploy", ["ngAnimate"]);
 
-// This controll controls the home page!!!
-app.controller("HomeController", ["$scope", "$location", "$http",
-  function($scope, $location, $http) {
-    $scope.title = "Tinder Thing";
+app.controller("NavController", ["$scope", "$http",
+  function($scope, $http) {
     $scope.loggedin = false;
+    $scope.signedin = "You are not signed in"
     $http.get("/api/users/me").success(function(data) {
       $scope.loggedin = data.loggedin;
+      if($scope.loggedin) {
+        $scope.signedin = "You are signed in as " + data.displayName;
+      }
     });
   }
 ]);
 
-app.controller("ProfileController", ["$scope", "$location", "$http",
-  function($scope, $location, $http) {
+app.controller("SignupController", ["$scope", "$http",
+  function($scope, $http) {
+    $scope.position = "start";
+
+    $scope.updatePosition = function(newposition) {
+      $scope.position = newposition;
+    };
   }
 ]);
 
 // Simple logging to make sure everything loaded correctly
 console.log("Angular has been loaded!");
-console.log("Test lint");

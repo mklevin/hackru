@@ -140,6 +140,10 @@ app.get("/", function(req, res) {
   res.sendFile(path.resolve("./public/html/index.html"));
 });
 
+app.get("/signup", function(req, res) {
+  res.sendFile(path.resolve("./public/html/signup.html"));
+});
+
 // The last middle wear to use is the 404 middlewear. If they didn't get
 // anywhere show them the 404
 app.use(function(req, res){
