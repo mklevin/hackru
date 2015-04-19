@@ -2,8 +2,6 @@ var router = require("express").Router();
 
 // Import all models
 var Searcher = require("../models/Searcher");
-var Resume = require("../models/Resume");
-var SearchPrefs = require("../models/SearchPrefs");
 var Listing = require("../models/Listing");
 var Employer = require("../models/Employer");
 var Company = require("../models/Company");
@@ -80,6 +78,12 @@ router.get("/companies/id/:id", function(req, res, next) {
 // ___________________listings___________________
 // return all listings
 router.get("/listings", function(req, res, next) {
+  params = {
+    number: req.query.number,
+  };
+
+  console.log(params);
+  console.log(req.query);
   Listing.find(function(err, listings) {
     if (err) next(err);
     res.json(listings);
@@ -93,7 +97,6 @@ router.get("/listings/id/:id", function(req, res, next) {
     res.json(listing);
   });
 });
-
 // =============================================================================
 // POSTS
 // =============================================================================
@@ -112,6 +115,77 @@ router.post("/users", function(req, res, next) {
       res.json(employer);
     });
   }
+});
+
+// Update the resume of a user
+router.post("/users/id/:id/resume", function(req, res, next) {
+  Searcher.findById(req.params.id, function(err, searcher) {
+    if (err) next(err);
+    if (searcher.type === "searcher") {
+      searcher.resume = req.body;
+      searcher.save();
+    }
+  });
+});
+
+// Update the search preferences of the user
+router.post("/users/id/:id/searchprefs", function(req, res, next) {
+  Searcher.findById(req.params.id, function(err, searcher) {
+    if (err) next(err);
+    if (searcher.type === "searcher") {
+      searcher.searchPrefs = req.body;
+      searcher.save();
+    }
+  });
+});
+
+// ___________________companies___________________
+// Create a new company
+router.post("/companies", function(req, res, next) {
+  Company.create(req.body, function(err, company) {
+    if (err) next(err);
+    res.json(company);
+  });
+});
+
+// ___________________listings___________________
+router.post("/listings", function(req, res, next) {
+  Listing.create(req.body, function(err, listing) {
+    if (err) next(err);
+    res.json(listing);
+  });
+});
+
+// =============================================================================
+// DELETE
+// =============================================================================
+
+// ___________________users___________________
+router.delete("/users/id/:id", function(req, res, next) {
+  Searcher.findByIdAndRemove(req.params.id, req.body, function(err, searcher) {
+    if (err) next(err);
+    if (searcher) res.json(searcher);
+  });
+  Employer.findByIdAndRemove(req.params.id, req.body, function(err, employer) {
+    if (err) next(err);
+    if (employer) res.json(employer);
+  });
+});
+
+// ___________________companies___________________
+router.delete("/companies/id/:id", function(req, res, next) {
+  Company.findByIdAndRemove(req.params.id, req.body, function(err, company) {
+    if (err) next(err);
+    res.json(company);
+  });
+});
+
+// ___________________listings___________________
+router.delete("/listings/id/:id", function(req, res, next) {
+  Company.findByIdAndRemove(req.param.id, req.body, function(err, listing) {
+    if (err) next(err);
+    res.json(listing);
+  });
 });
 
 module.exports = router;
