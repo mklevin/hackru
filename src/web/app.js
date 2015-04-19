@@ -23,15 +23,14 @@ var express        = require("express");
     methodOverride = require("method-override");
     mongoose       = require("mongoose");
     ejs			   = require("ejs");
-    Client = require('node-rest-client').Client;
-    client = new Client();
+    GoogleStrategy = require("passport-google-oauth").OAuth2Strategy;
 
 // =============================================================================
 // CONFIGURATIONS
 // =============================================================================
 
 // Configure passport, grab credentials
-//var authConfig = require("./config/auth");
+var authConfig = require("./config/auth");
 
 // Allo passport to serialize and deserialize users
 passport.serializeUser(function(user, done) {
@@ -43,30 +42,24 @@ passport.deserializeUser(function(obj, done) {
 });
 
 // // Input whichever strategy you would like to use
-// passport.use(new GitHubStrategy({
-//     clientID: authConfig.clientID,
-//     clientSecret: authConfig.clientSecret,
-//     callbackURL: authConfig.callbackURL
-//   },
-//   function(accessToken, refreshToken, profile, done) {
-//     // asynchronous verification, for effect...
-//     process.nextTick(function () {
-
-//       // To keep the example simple, the user's GitHub profile is returned to
-//       // represent the logged-in user.  In a typical application, you would want
-//       // to associate the GitHub account with a user record in your database,
-//       // and return that user instead.
-//       return done(null, profile);
-//     });
-//   }
-// ));
+passport.use(new GoogleStrategy({
+    clientID: authConfig.clientID,
+    clientSecret: authConfig.clientSecret,
+    callbackURL: authConfig.callbackURL
+  },
+  function(accessToken, refreshToken, profile, done) {
+    console.log(profile);
+    console.log(profile.id);
+    done(null, profile);
+  }
+));
 
 // configure Express and express middlewear
 // app.use(express.static(__dirname + '/client'));
 // app.set('views', __dirname + '/client/html');
 app.use(morgan("combined"));
 app.use(cookieParser());
-app.use(bodyParser.urlencoded({ extended: false}));
+app.use(bodyParser.json());
 app.use(methodOverride());
 
 // configure EJS
@@ -87,8 +80,8 @@ app.use(passport.session());
 // =============================================================================
 // DATABASE
 // =============================================================================
-// var dbConfig = require("./config/db");
-// mongoose.connect(dbConfig.url);
+var dbConfig = require("./config/db");
+mongoose.connect(dbConfig.url);
 
 // =============================================================================
 // ROUTES
@@ -101,18 +94,24 @@ app.use(passport.session());
 // app.use("/auth", auth);
 // app.use("/", routes);
 
+var api = require("./routes/api");
+
+app.get("/auth/google",
+        passport.authenticate("google", authConfig.scope),
+        function(req, res) {});
+
+app.get("/auth/google/callback",
+        passport.authenticate("google", { failureRedirect: "/fff" }),
+        function(req, res) {
+          res.redirect("/success");
+        });
+
+app.use("/api", api);
+
 var user = {};
 var listings = [];
 listings[0] = {};
 listings[1] = {};
-http.get("http://172.31.244.174:3100/api/listings", function(res) {
-  console.log("Got response: " + res.statusCode);
-  res.on("data", function(chunk) {
-	// console.log("BODY: " + chunk);
-  });
-}).on('error', function(e) {
-  console.log("Got error: " + e.message);
-});
 user.first = "Natalie";
 user.last = "Lane";
 
@@ -131,10 +130,6 @@ listings[1].perks = ["chicken", "other meat"];
 listings[1].skills = ["meat identification", "balls"];
 
 app.get("/", function(req, res) {
-  client.get("http://localhost:3100/api/listings", function(data, response) {
-    console.log(data);
-    //console.log(response);
-  });
   res.render("index", {user: user, listing: listings[0]});
 });
 
@@ -161,7 +156,7 @@ app.use(function(req, res){
 var server = http.createServer(app);
 
 // Start the server (taken from Andy which is taken from Cloud9)
-server.listen(process.env.PORT || 25000, process.env.IP || "0.0.0.0", function() {
+server.listen(process.env.PORT || 3100, process.env.IP || "0.0.0.0", function() {
   var address = server.address();
   console.log("Server is now started on ", address.address + ":" + address.port);
 });
