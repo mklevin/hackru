@@ -30,24 +30,6 @@ router.get("/users", function(req, res, next) {
 router.get("/users/id/:id", function(req, res, next) {
   Searcher.findById(req.params.id, function(err, searcher) {
     if (err) next(err);
-    if (searcher) {
-
-      // Check to see if they have filled out any search preferences or resume yet
-      // if so, add that
-      if (searcher.searchPreferences) {
-        SearchPrefs.findById(searcher.searchPreferences, function(err, prefs) {
-          if (err) next(err);
-          searcher.searchPreferences = prefs;
-        });
-      }
-      if (searcher.resume) {
-        Resume.findById(searcher.resume, function(err, resume) {
-          if (err) next(err);
-          searcher.resume = resume;
-        });
-      }
-    }
-
     res.json(searcher);
   });
   Employer.findById(req.params.id, function(err, employer) {
@@ -69,7 +51,7 @@ router.get("/companies", function(req, res, next) {
 
 // Return a specific company based on their mongodb id
 router.get("/companies/id/:id", function(req, res, next) {
-  Company.findById(function(err, comapny) {
+  Company.findById(req.params.id, function(err, comapny) {
     if (err) next(err);
     res.json(company);
   });
@@ -103,7 +85,7 @@ router.get("/listings", function(req, res, next) {
   };
 
   console.log(params);
-  Listing.find(fields, function(err, listings) {
+  Listing.find( function(err, listings) {
     if (err) next(err);
     res.json(listings);
   });
@@ -111,7 +93,7 @@ router.get("/listings", function(req, res, next) {
 
 // return a specific listing based on its mongodb id
 router.get("/listings/id/:id", function(req, res, next) {
-  Listing.findById(function(err, listing) {
+  Listing.findById(req.params.id, function(err, listing) {
     if (err) next(err);
     res.json(listing);
   });
@@ -168,6 +150,7 @@ router.post("/companies", function(req, res, next) {
 });
 
 // ___________________listings___________________
+// Create a new listing
 router.post("/listings", function(req, res, next) {
   Listing.create(req.body, function(err, listing) {
     if (err) next(err);
@@ -201,7 +184,7 @@ router.delete("/companies/id/:id", function(req, res, next) {
 
 // ___________________listings___________________
 router.delete("/listings/id/:id", function(req, res, next) {
-  Company.findByIdAndRemove(req.param.id, req.body, function(err, listing) {
+  Company.findByIdAndRemove(req.params.id, req.body, function(err, listing) {
     if (err) next(err);
     res.json(listing);
   });
