@@ -60,31 +60,6 @@ router.get("/companies/id/:id", loggedIn, function(req, res, next) {
 // ___________________listings___________________
 // return all listings
 router.get("/listings", loggedIn, function(req, res, next) {
-  params = {
-    number: 10,
-    type: "internship",
-    skills: [],
-    location: [],
-    time: "Summer2015",
-    edu: [],
-    exp: []
-  };
-
-  if (req.query.number) params.number = req.query.number;
-  if (req.query.skills) params.skills = req.query.skills.split(",");
-  if (req.query.type) params.type = req.query.type;
-  if (req.query.location) params.location = req.query.location.split(",");
-  if (req.query.time) params.time = req.query.time;
-  if (req.query.edu) params.edu = req.query.edu;
-  if (req.query.exp) params.exp = req.query.exp;
-
-  var fields = {
-    type: params.type,
-    count: params.number,
-    skip: Math.floor((Math.random() * 100) + 1)
-  };
-
-  console.log(params);
   Listing.find( function(err, listings) {
     if (err) next(err);
     res.json(listings);
@@ -104,7 +79,7 @@ router.get("/listings/id/:id", function(req, res, next) {
 
 // ___________________users___________________
 // Create a new user, either a searcher or employer
-router.post("/users", loggedIn, function(req, res, next) {
+router.post("/users/new", loggedIn, function(req, res, next) {
   req.body.googleid = req.user.id;
   if (req.body.type === "searcher") {
     Searcher.create(req.body, function(err, searcher) {
@@ -143,7 +118,7 @@ router.post("/users/id/:id/searchprefs", loggedIn, function(req, res, next) {
 
 // ___________________companies___________________
 // Create a new company
-router.post("/companies", loggedIn, function(req, res, next) {
+router.post("/companies/new", loggedIn, function(req, res, next) {
   Company.create(req.body, function(err, company) {
     if (err) next(err);
     res.json(company);
@@ -152,10 +127,18 @@ router.post("/companies", loggedIn, function(req, res, next) {
 
 // ___________________listings___________________
 // Create a new listing
-router.post("/listings", loggedIn, function(req, res, next) {
+router.post("/listings/new", loggedIn, function(req, res, next) {
   Listing.create(req.body, function(err, listing) {
     if (err) next(err);
     res.json(listing);
+  });
+});
+
+
+router.post("/listings", loggedIn, function(req, res, next) {
+  Listing.find({}, function(err, listings) {
+    if (err) next(err);
+    res.json(listings);
   });
 });
 

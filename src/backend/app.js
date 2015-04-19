@@ -56,7 +56,7 @@ passport.use(new GoogleStrategy({
 // app.set('views', __dirname + '/client/html');
 app.use(morgan("combined"));
 app.use(cookieParser());
-app.use(bodyParser.urlencoded({ extended: false}));
+app.use(bodyParser.urlencoded({ extended: true}));
 app.use(methodOverride());
 app.use(session({
   secret: authConfig.clientSecret,
@@ -97,7 +97,8 @@ app.get("/", function(req, res) {
 });
 
 app.get("/success", function(req, res) {
-  res.send("You logged in " + req.user.displayName);
+  if (req.user) res.send("You logged in " + req.user.displayName);
+  else res.send("You are not logged in!");
 });
 
 // The last middle wear to use is the 404 middlewear. If they didn't get
