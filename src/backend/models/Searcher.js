@@ -10,10 +10,11 @@ var searcherSchema = new Schema({
   middlename: String,
   searchPrefs: {
     type: { type: String },
-    field: { type:String },
+    field: { type: String },
     yearsexp: { type: Number, default: 0 },
     starttime: { type: Date, default: Date.now },
     locradius: { type: Number, default: 100 },
+    skills: [String],
     recentEdu: {
       level: String,
       major: String,
