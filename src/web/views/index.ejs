@@ -9,10 +9,31 @@
 			<div class="form-group">
 				<div class="row">
 					<div class="col-md-8 col-md-offset-2">
-						<div class="card">
-							<div class="card-body">
-								<h1>Job Title</h1>
-								<p>Welcome to The Unnamed Thing!</p>
+						<div class="panel">
+							<div class="panel-body">
+								<h1><%=listing.title%><br/>
+								<small><%=listing.location.city%>, <%=listing.location.state%></small></h1>
+								<h3>Description</h3>
+								<p><%=listing.description%></p>
+								<h3>Perks</h3>
+								<ul><%listing.perks.forEach(function(perk){%>
+								<li><%=perk%></li>
+								<%});%></ul>
+								<h3>Required Skills</h3>
+								<ul><%listing.skills.forEach(function(skill){%>
+								<li><%=skill%></li>
+								<%});%></ul>
+								
+								<!--<div class="pull-right"><h1><i class="mdi-action-grade"></i></h1></div>-->
+								
+								<br/>
+								
+								<div class="pull-left">
+									<a href="javascript:void(0)" class="btn btn-flat btn-danger">no thanks<div class="ripple-wrapper"></div></a>
+								</div>
+								<div class="pull-right">
+									<a href="javascript:void(0)" class="btn btn-flat btn-success">tell me more</a>
+								</div>
 							</div>
 						</div>
 					</div>

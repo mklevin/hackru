@@ -101,11 +101,25 @@ app.use(passport.session());
 
 app.get("/", function(req, res) {
   var user = {};
-  JSON.parse('{"first": "Natalie", "last": "Lane"}', function(k, v) {
-    console.log(k);
-    user[k] = v;
-  });
-  res.render("index", {user: user});
+  var listing = {};
+  http.get("http://172.31.244.174:3100/api/listings", function(res) {
+	  console.log("Got response: " + res.statusCode);
+	  res.on("data", function(chunk) {
+		console.log("BODY: " + chunk);
+	  });
+	}).on('error', function(e) {
+	  console.log("Got error: " + e.message);
+	});
+  user.first = "Natalie";
+  user.last = "Lane";
+  
+  listing.title = "HackRU Winner";
+  listing.location = { "city": "Rutgersville", "state": "NJ", "country": "US"};
+  listing.description = "This is the best job ever.";
+  listing.perks = ["free coffee", "admiration"];
+  listing.skills = ["being the best", "Java"];
+  
+  res.render("index", {user: user, listing: listing});
 });
 
 // The last middle wear to use is the 404 middlewear. If they didn't get
