@@ -190,8 +190,7 @@ function loggedIn(req, res, next) {
     next();
   } else {
     console.log("not logged in");
-    //res.redirect("/");
-    next();
+    res.redirect("/");
   }
 }
 

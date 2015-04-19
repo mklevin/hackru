@@ -48,6 +48,7 @@ passport.use(new GoogleStrategy({
     callbackURL: authConfig.callbackURL
   },
   function(accessToken, refreshToken, profile, done) {
+    console.log("Callback thing");
     console.log(profile);
     console.log(profile.id);
     done(null, profile);
@@ -66,11 +67,11 @@ app.use(methodOverride());
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, 'public')));
-// app.use(session({
-//   secret: authConfig.sessionSecret,
-//   resave: false,
-//   saveUninitialized: true
-// }));
+app.use(session({
+  secret: authConfig.clientSecret,
+  resave: false,
+  saveUninitialized: true
+}));
 
 // Initialize Passport!  Also use passport.session() middleware, to support
 // persistent login sessions
@@ -103,7 +104,9 @@ app.get("/auth/google",
 app.get("/auth/google/callback",
         passport.authenticate("google", { failureRedirect: "/fff" }),
         function(req, res) {
-          res.redirect("/success");
+          console.log(req.user);
+          console.log("HERE!!!!");
+          res.redirect("/");
         });
 
 app.use("/api", api);
@@ -129,8 +132,31 @@ listings[1].description = "This is the weirdest 1 AM dinner ever.";
 listings[1].perks = ["chicken", "other meat"];
 listings[1].skills = ["meat identification", "balls"];
 
-app.get("/", function(req, res) {
-  res.render("index", {user: user, listing: listings[0]});
+var Searcher = require("./models/Searcher");
+var Employer = require("./models/Employer");
+
+app.get("/", function(req, res, next) {
+  if (req.user) {
+    console.log("USER LOGGED IN");
+    console.log(req.user);
+    Searcher.find({googleid: req.user.id}, function(err, userRes) {
+      if(err) next(err);
+      if (userRes) user = userRes;
+    });
+    Employer.find({googleid: req.user.id}, function(err, userRes) {
+      if (err) next(err);
+      if (userRes) user = userRes;
+    });
+
+    res.render("index", {user: user, listing: listings[0]});
+  } else {
+    res.redirect("/auth/google");
+  }
+});
+
+app.get("/success", function(req, res, next) {
+  console.log(req.user);
+  next();
 });
 
 app.post("/next", function(req, res) {
