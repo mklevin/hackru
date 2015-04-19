@@ -23,6 +23,8 @@ var express        = require("express");
     methodOverride = require("method-override");
     mongoose       = require("mongoose");
     ejs			   = require("ejs");
+    Client = require('node-rest-client').Client;
+    client = new Client();
 
 // =============================================================================
 // CONFIGURATIONS
@@ -129,6 +131,10 @@ listings[1].perks = ["chicken", "other meat"];
 listings[1].skills = ["meat identification", "balls"];
 
 app.get("/", function(req, res) {
+  client.get("http://localhost:3100/api/listings", function(data, response) {
+    console.log(data);
+    //console.log(response);
+  });
   res.render("index", {user: user, listing: listings[0]});
 });
 
@@ -154,7 +160,7 @@ app.use(function(req, res){
 var server = http.createServer(app);
 
 // Start the server (taken from Andy which is taken from Cloud9)
-server.listen(process.env.PORT || 3100, process.env.IP || "0.0.0.0", function() {
+server.listen(process.env.PORT || 25000, process.env.IP || "0.0.0.0", function() {
   var address = server.address();
   console.log("Server is now started on ", address.address + ":" + address.port);
 });
