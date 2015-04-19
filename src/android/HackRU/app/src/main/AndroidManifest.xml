@@ -8,13 +8,72 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="nameScreen"
+            android:name=".nameScreen"
+            android:label="Mploy(me)">
+        </activity>
+        <activity
+            android:name=".successScreen"
+            android:label="Mploy(me)">
+        </activity>
+        <activity
+            android:name=".seekerApplyScreen"
+            android:label="Mploy(me)">
+        </activity>
+        <activity
+            android:name=".contactScreen"
+            android:label="Mploy(me)">
+        </activity>
+        <activity
+            android:name=".viewResumeScreen"
+            android:label="Mploy(me)">
+        </activity>
+        <activity
+            android:name=".seekerMatchScreen"
+            android:label="Mploy(me)">
+        </activity>
+        <activity
+            android:name=".employMatchScreen"
+            android:label="Mploy(me)">
+        </activity>
+        <activity
+            android:name=".newJobScreen"
+            android:label="Mploy(me)">
+        </activity>
+        <activity
+            android:name=".skillsScreen"
+            android:label="Mploy(me)">
+        </activity>
+        <activity
+            android:name=".whenScreen"
+            android:label="Mploy(me)">
+        </activity>
+        <activity
+            android:name=".experScreen"
+            android:label="Mploy(me)">
+        </activity>
+        <activity
+            android:name=".locationScreen"
+            android:label="Mploy(me)">
+        </activity>
+        <activity
+            android:name=".eduScreen"
+            android:label="Mploy(me)">
+        </activity>
+        <activity
+            android:name=".fieldScreen"
+            android:label="Mploy(me)">
+        </activity>
+        <activity
+            android:name=".jobTypeScreen"
+            android:label="Mploy(me)">
+        </activity>
+        <activity
+            android:name=".userTypeScreen"
             android:label="Mploy(me)">
         </activity>
         <activity
             android:name=".hackruActivity"
             android:label="Mploy(me)" >
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -12,20 +12,20 @@ import android.widget.Button;
 /**
  * Created by Natalie on 4/19/2015.
  */
-public class nameScreen extends ActionBarActivity {
+public class newJobScreen extends ActionBarActivity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.name_screen);
+        setContentView(R.layout.newjob_screen);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        final Button button = (Button) findViewById(R.id.Button2);
-        button.setOnClickListener(new View.OnClickListener() {
+        final Button b1 = (Button) findViewById(R.id.button12);
+            b1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent newIntent = new Intent(getApplicationContext(), userTypeScreen.class);
+                Intent newIntent = new Intent(getApplicationContext(), employMatchScreen.class);
                 startActivity(newIntent);
             }
         });

@@ -12,24 +12,41 @@ import android.widget.Button;
 /**
  * Created by Natalie on 4/19/2015.
  */
-public class nameScreen extends ActionBarActivity {
+public class employMatchScreen extends ActionBarActivity {
+
+    private String description;
+    private String skills;
+    private String perks;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.name_screen);
+        setContentView(R.layout.employmatch_screen);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        final Button button = (Button) findViewById(R.id.Button2);
-        button.setOnClickListener(new View.OnClickListener() {
+        final Button match = (Button) findViewById(R.id.button17);
+        match.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent newIntent = new Intent(getApplicationContext(), userTypeScreen.class);
+                Intent newIntent = new Intent(getApplicationContext(), viewResumeScreen.class);
+                startActivity(newIntent);
+            }
+        });
+
+        final Button noMatch = (Button) findViewById(R.id.button16);
+        noMatch.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent newIntent = new Intent(getApplicationContext(), employMatchScreen.class);
+                // view next seeker
                 startActivity(newIntent);
             }
         });
     }
+
+
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
