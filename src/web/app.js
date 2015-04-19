@@ -150,7 +150,7 @@ app.get("/", function(req, res, next) {
 
     res.render("index", {user: user, listing: listings[0]});
   } else {
-    res.redirect("/auth/google");
+    res.render("index", {user: user, listing: listings[0]});
   }
 });
 

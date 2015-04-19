@@ -3,8 +3,8 @@
 		<%- include partials/header_js.ejs %>
 		<title>Home Page</title>
 	</head>
-	
-	<body>		
+
+	<body>
 		<%- include partials/nav.ejs %>
 		<div class="container">
 		<div class="row" id="card_row">
@@ -12,11 +12,11 @@
 				<div class="panel" style="padding: 0 20px">
 					<div class="panel-body">
 						<div id="card_content">
-							<!--<%- include partials/login_card.ejs %>-->
-							<%- include questions/job_card.ejs %>
+							<%- include questions/name.ejs %>
+							<!-- <%- include partials/job_card.ejs %> -->
 						</div>
-				
-						<div id="nav_buttons" style="display: none;">
+
+						<div id="nav_buttons" style="">
 							<div class="pull-left">
 								<a id="deny" href="javascript:void(0)" class="btn btn-flat btn-danger">no thanks<div class="ripple-wrapper"></div></a>
 							</div>
@@ -44,7 +44,7 @@
 					}
 				});
 			});
-		
+
 			$("#accept").click(function(e){
 				e.preventDefault();
 				$.ajax({type: "POST",
@@ -64,7 +64,7 @@
 </html>
 
 <!--login modal-->
-<!-- 
+<!--
 <div id="loginModal" class="modal show" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog">
   <div class="modal-content">
@@ -73,7 +73,7 @@
       </div>
       <div class="modal-body text-center">
       	<br/>
-         
+
 
 </div>
       </div>
