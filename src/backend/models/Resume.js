@@ -2,7 +2,7 @@ var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
 var resumeSchema = new Schema({
-  seracher: Schema.ObjectId,
+  seracher: { type: Schema.Types.ObjectId, ref: "Searcher" },
   education: [{
     level: String,
     major: String,

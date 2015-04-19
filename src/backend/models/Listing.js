@@ -11,10 +11,10 @@ var listingSchema = new Schema({
   time: String,
   reqskills: [String],
   reqedu: [String],
-  reqskills: [String],
+  reqexp: [String],
   perks: [String],
   description: { type: String, required: true },
-  company: Schema.ObjectId
+  company: { type: Schema.Types.ObjectId, ref: "Company" }
 });
 
 module.exports = mongoose.model("Listing", listingSchema);

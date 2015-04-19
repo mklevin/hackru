@@ -85,12 +85,8 @@ mongoose.connect(dbConfig.url);
 // ROUTES
 // =============================================================================
 var api = require("./routes/api");
-// var auth = require("./routes/auth");
-// var routes = require("./routes/routes");
 
 app.use("/api", api);
-// app.use("/auth", auth);
-// app.use("/", routes);
 
 app.get("/", function(req, res) {
   res.send("Hello world!");

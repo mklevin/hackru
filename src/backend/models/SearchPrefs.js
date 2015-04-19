@@ -2,7 +2,7 @@ var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
 var searchPrefSchema = new Schema({
-  searcher: Schema.ObjectId,
+  searcher: { type: Schema.Types.ObjectId, ref: "Searcher" },
   type: { type: String, required: true },
   field: { type:String, required: true },
   yearsexp: { type: Number, required: true, default: 0 },

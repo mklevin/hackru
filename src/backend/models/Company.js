@@ -10,8 +10,8 @@ var companySchema = new Schema({
     country: String
   },
   type: String,
-  employers: [Schema.ObjectId],
-  listings: [Schema.ObjectId]
+  employers: [{type: Schema.Types.ObjectId, ref: "Employer"}],
+  listings: [{type: Schema.Types.ObjectId, ref: "Listing"}]
 });
 
 module.exports = mongoose.model("Company", companySchema);
