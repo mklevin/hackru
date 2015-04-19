@@ -40,6 +40,15 @@ router.get("/users/id/:id", loggedIn, function(req, res, next) {
   });
 });
 
+router.get("/users/me", function(req, res, next) {
+  if (req.user) {
+    req.user.loggedin = true;
+    res.json(req.user);
+  } else {
+    res.json({ loggedin: false });
+  }
+});
+
 // ___________________companies___________________
 // Return all companies
 router.get("/companies", loggedIn, function(req, res, next) {
