@@ -1,0 +1,39 @@
+<div class="text-center">
+	<div id="question">
+		<%- include job_type.ejs %>
+	</div>
+	<div class="row" style="margin: 20px">
+			<button id="back" class="btn">Back<div class="ripple-wrapper"></div></button>
+			<button id="next" class="btn btn-primary">Next<div class="ripple-wrapper"></div></button>
+	</div>
+</div>
+
+<script>
+	$(document).ready(function(){
+		$("#back").click(function(e){
+			e.preventDefault();
+			$.ajax({type: "POST",
+				url: "/next_question",
+				success:function(result){
+					$("#card_row").animate({'duration': 3000, 'opacity': 0}, {queue:false, complete:function(){
+						$("#question").html(result);
+						$(this).animate({'duration': 3000, 'opacity': 1});
+					}});
+				}
+			});
+		});
+	
+		$("#next").click(function(e){
+			e.preventDefault();
+			$.ajax({type: "POST",
+				url: "/last_question",
+				success:function(result){
+					$("#card_row").animate({'duration': 3000, 'opacity': 0}, {queue:false, complete:function(){
+						$("#question").html(result);
+						$(this).animate({'duration': 3000, 'opacity': 1});
+					}});
+				}
+			});
+		});
+	});
+</script>

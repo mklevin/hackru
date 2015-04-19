@@ -135,7 +135,7 @@ app.get("/", function(req, res) {
     console.log(data);
     //console.log(response);
   });
-  res.render("index", {user: user, listing: listings[0]});
+  res.render("index", {user: user, listing: listings[0], question: 1});
 });
 
 app.post("/next", function(req, res) {
