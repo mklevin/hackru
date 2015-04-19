@@ -99,27 +99,46 @@ app.use(passport.session());
 // app.use("/auth", auth);
 // app.use("/", routes);
 
+var user = {};
+var listings = [];
+listings[0] = {};
+listings[1] = {};
+http.get("http://172.31.244.174:3100/api/listings", function(res) {
+  console.log("Got response: " + res.statusCode);
+  res.on("data", function(chunk) {
+	// console.log("BODY: " + chunk);
+  });
+}).on('error', function(e) {
+  console.log("Got error: " + e.message);
+});
+user.first = "Natalie";
+user.last = "Lane";
+
+listings[0].id = "1";
+listings[0].title = "HackRU Winner";
+listings[0].location = { "city": "Rutgersville", "state": "NJ", "country": "US"};
+listings[0].description = "This is the best job ever.";
+listings[0].perks = ["free coffee", "admiration"];
+listings[0].skills = ["being the best", "Java"];
+
+listings[1].id = "2";
+listings[1].title = "HackRU Dinner";
+listings[1].location = { "city": "Noodles", "state": "NJ", "country": "US"};
+listings[1].description = "This is the weirdest 1 AM dinner ever.";
+listings[1].perks = ["chicken", "other meat"];
+listings[1].skills = ["meat identification", "balls"];
+
 app.get("/", function(req, res) {
-  var user = {};
-  var listing = {};
-  http.get("http://172.31.244.174:3100/api/listings", function(res) {
-	  console.log("Got response: " + res.statusCode);
-	  res.on("data", function(chunk) {
-		console.log("BODY: " + chunk);
-	  });
-	}).on('error', function(e) {
-	  console.log("Got error: " + e.message);
-	});
-  user.first = "Natalie";
-  user.last = "Lane";
-  
-  listing.title = "HackRU Winner";
-  listing.location = { "city": "Rutgersville", "state": "NJ", "country": "US"};
-  listing.description = "This is the best job ever.";
-  listing.perks = ["free coffee", "admiration"];
-  listing.skills = ["being the best", "Java"];
-  
-  res.render("index", {user: user, listing: listing});
+  res.render("index", {user: user, listing: listings[0]});
+});
+
+app.post("/next", function(req, res) {
+	console.log("Hey!");
+	res.render("partials/job_card", {user: user, listing: listings[1]});
+});
+
+app.post("/more", function(req, res) {
+	res.render("partials/full_job_card", {user: user, listing: listings[1]});
 });
 
 // The last middle wear to use is the 404 middlewear. If they didn't get

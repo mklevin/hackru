@@ -1,0 +1,12 @@
+<h1><%=listing.title%><br/>
+<small><%=listing.location.city%>, <%=listing.location.state%></small></h1>
+<h3>Description</h3>
+<p><%=listing.description%></p>
+<h3>Perks</h3>
+<ul><%listing.perks.forEach(function(perk){%>
+<li><%=perk%></li>
+<%});%></ul>
+<h3>Required Skills</h3>
+<ul><%listing.skills.forEach(function(skill){%>
+<li><%=skill%></li>
+<%});%></ul>
