@@ -1,6 +1,5 @@
-# HACKRU
+# HackRU
 
-The best application around. Developed by yours truly at HackRU.
+An incomplete hack idea from HackRU 2014.
 
-Internships, meet Tinder.
-TEST
+The concept: internships, meet Tinder.
